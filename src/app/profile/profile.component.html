@@ -1,0 +1,258 @@
+<section class="p-4" id="profile">
+  <div class="container">
+    <div *ngIf="!isLoad" class="row">
+      <div class="col-12 text-center">
+        <i class="fas fa-spinner fa-spin text-white fa-2x"> </i>
+      </div>
+    </div>
+    <div *ngIf="isLoad" class="row">
+      <div class="col-12 btn-add">
+        <button
+          class="btn btn-info"
+          data-bs-toggle="modal"
+          data-bs-target="#addNote"
+        >
+          Add Note
+        </button>
+      </div>
+
+      <div
+        *ngFor="let note of allNotes"
+        class="col-lg-3 col-md-4 p-2 text-center"
+      >
+        <!-- <div class="row">
+          <div class="col-12"> -->
+        <div class="note">
+          <div class="dropdown-icon">
+            <i
+              class="float-end p-2 fas fa-ellipsis-v"
+              id="dropdownMenuButton1"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            ></i>
+
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li>
+                <a
+                  class="dropdown-item"
+                  data-bs-toggle="modal"
+                  data-bs-target="#EditNote"
+                  (click)="getId(note._id); setNote()"
+                  ><span>Edit</span>
+                  <i class="fas fa-pen-square float-end text-info fs-4"></i
+                ></a>
+              </li>
+              <hr />
+              <li>
+                <a
+                  class="dropdown-item"
+                  data-bs-toggle="modal"
+                  data-bs-target="#DeleteNote"
+                  (click)="getId(note._id)"
+                >
+                  <span>Delete</span>
+                  <i class="fas fa-trash float-end text-danger fs-4"></i
+                ></a>
+              </li>
+            </ul>
+          </div>
+          <!-- </div>
+        </div> -->
+          <div class="note-current">
+            <h4>{{ note.title }}</h4>
+            <p>
+              {{ note.desc }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================Modals================================== -->
+
+<!-- Modal -->
+<!-- ----------------------------------Add Note--------------------------------- -->
+<div
+  class="modal fade"
+  id="addNote"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <form [formGroup]="addNote" (submit)="addData()">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Note</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-12">
+              <label for="title" class="pb-2"> Title Note :</label>
+              <input
+                placeholder="Title"
+                type="text"
+                class="form-control"
+                name=""
+                id="title"
+                formControlName="title"
+              />
+              <p
+                class="atert alert-danger"
+                *ngIf="addNote.get('title')?.errors?.['required'] &&addNote?.touched"
+              >
+                is required title
+              </p>
+            </div>
+            <div class="col-12 pt-2">
+              <label for="description" class="pb-2"> Title Note :</label>
+
+              <textarea
+                placeholder="Add Description"
+                formControlName="desc"
+                name="description"
+                id="description"
+                class="form-control"
+                cols="30"
+                rows="10"
+              ></textarea>
+              <p
+                class="atert alert-danger"
+                *ngIf="addNote.get('desc')?.errors?.['required'] &&addNote?.touched"
+              >
+                is required title
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+            Cancle
+          </button>
+
+          <button
+            [disabled]="addNote.status == 'INVALID'"
+            type="submit"
+            class="btn btn-info"
+          >
+            Add Note
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ---------------------------------- /Add Note--------------------------------- -->
+
+<!-- ----------------------------------Edit Note--------------------------------- -->
+<div
+  class="modal fade"
+  id="EditNote"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <form [formGroup]="addNote" (submit)="editNote()">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Eidt Note</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-12">
+              <label for="title" class="pb-2"> Title Note :</label>
+              <input
+                type="text"
+                class="form-control"
+                name=""
+                id="title"
+                formControlName="title"
+              />
+            </div>
+            <div class="col-12 pt-2">
+              <label for="description" class="pb-2"> Edit Note :</label>
+
+              <textarea
+                formControlName="desc"
+                name="description"
+                id="description"
+                class="form-control"
+                cols="30"
+                rows="10"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+            Cancle
+          </button>
+
+          <button type="submit" class="btn btn-info">Seve</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ---------------------------------- /Edit Note--------------------------------- -->
+
+<!-- ---------------------------------Delete Note--------------------------------- -->
+<div
+  class="modal fade"
+  id="DeleteNote"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete Note</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <h3>
+                Do you really want tp delete ? <br />
+                process cannot be undone
+              </h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" data-bs-dismiss="modal">
+          Cancle
+        </button>
+
+        <button (click)="deletedNote()" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ---------------------------------- /Delete Note--------------------------------- -->

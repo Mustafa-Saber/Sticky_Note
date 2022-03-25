@@ -1,0 +1,32 @@
+$backgroundColor: #666;
+$backNote: #fcc;
+
+#profile {
+  min-height: 100vh;
+  background-color: $backgroundColor;
+  .btn-add {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .note {
+    background-color: $backNote;
+    height: 200px;
+    overflow: auto;
+
+    padding: 1em;
+    .dropdown-icon {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+    }
+    .note-current {
+      word-wrap: break-word;
+      h4 {
+        padding-bottom: 0.5em;
+      }
+    }
+    i {
+      cursor: pointer;
+    }
+  }
+}

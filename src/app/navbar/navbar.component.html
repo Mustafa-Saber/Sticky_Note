@@ -1,0 +1,75 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/profile"
+      ><i class="far fa-sticky-note pe-2"></i>Sticky-Note</a
+    >
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown" *ngIf="!_AuthService.isLogIn()">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            SignIn
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="/sign-in"
+                (click)="clickNav()"
+                >sign-In</a
+              >
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="/sign-up"
+                (click)="clickNav()"
+                >sign-Up</a
+              >
+            </li>
+          </ul>
+        </li>
+        <li class="me-4" *ngIf="_AuthService.isLogIn()">
+          <h5 class="text-white">
+            <span class="text-info">Welcome</span> {{ decoded.first_name }}
+          </h5>
+        </li>
+        <li class="nav-item dropdown" *ngIf="_AuthService.isLogIn()">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Logout
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><hr class="dropdown-divider" /></li>
+
+            <li (click)="logOut()">
+              <a class="dropdown-item" routerLink="/sign-in">Logout</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

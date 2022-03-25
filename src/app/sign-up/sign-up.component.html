@@ -1,0 +1,103 @@
+<section id="sign-up">
+
+  <form  class="w-50 text-white" [formGroup]="signUp" (ngSubmit)=" signUpForm(signUp)">
+<!-- <h1>{{signUp.get('first_name')?.errors  |json}}</h1> -->
+
+<div class="d-flex ">
+  <div  class="w-50 pe-2">
+    <label for="first_name" >Name :</label>
+    <input [class.is-valid]="signUp.get('first_name')?.status=='VALID'"  type="text" name="first_name" id="first_name" class="form-control"  formControlName="first_name">
+    <div class="alert alert-danger px-3  p-0"
+    *ngIf="signUp.get('first_name')?.errors !=null &&
+    signUp.get('first_name')?.touched">
+      <p *ngIf="signUp.get('first_name')?.errors?.['required']">
+        First Name required
+      </p>
+      <p *ngIf="signUp.get('first_name')?.errors?.['minlength']">
+        First Name minLength is 3
+      </p>
+      <p  *ngIf="signUp.get('first_name')?.errors?.['maxlength']">
+        First Name maxLength is 10
+      </p>
+    </div>
+  </div>
+  <div class="w-50 ps-2">
+    <label for="last_name" >Last Name :</label>
+    <input [class.is-valid]="signUp.get('last_name')?.status=='VALID'"  type="text" name="last_name" id="last_name" class="form-control"  formControlName="last_name">
+     <div class="alert alert-danger px-3  p-0 "
+    *ngIf="signUp.get('last_name')?.errors !=null &&
+    signUp.get('last_name')?.touched">
+      <p *ngIf="signUp.get('last_name')?.errors?.['required']">
+        First Name required
+      </p>
+      <p *ngIf="signUp.get('last_name')?.errors?.['minlength']">
+        First Name minLength is 3
+      </p>
+      <p  *ngIf="signUp.get('last_name')?.errors?.['maxlength']">
+        First Name maxLength is 10
+      </p>
+    </div>
+  </div>
+</div>
+    <div >
+      <label for="email" >Email :</label>
+      <input [class.is-valid]="signUp.get('email')?.status=='VALID'" type="email" name="email" id="email" class="form-control" formControlName="email" >
+      <div class="alert alert-danger px-3  p-0 "
+      *ngIf="signUp.get('email')?.errors !=null &&
+      signUp.get('email')?.touched">
+        <p *ngIf="signUp.get('email')?.errors?.['required']">
+         Email required
+        </p>
+        <p *ngIf="signUp.get('email')?.errors?.['email']">
+          Not Valiad
+
+        </p>
+
+      </div>
+    </div>
+    <div >
+      <label for="password" >Password :</label>
+      <input [class.is-valid]="signUp.get('password')?.status=='VALID'" type="password" name="password" id="password" class="form-control" formControlName="password" >
+      <div class="alert alert-danger px-3  p-0 "
+      *ngIf="signUp.get('password')?.errors !=null &&
+      signUp.get('password')?.touched">
+        <p *ngIf="signUp.get('password')?.errors?.['required']">
+          Password required
+        </p>
+        <p *ngIf="signUp.get('password')?.errors?.['pattern']">
+          weak password
+        </p>
+
+      </div>
+    </div>
+    <div >
+      <label for="age" >Age :</label>
+      <input  [class.is-valid]="signUp.get('age')?.status=='VALID'"type="number" name="age" id="age" class="form-control"  formControlName="age">
+      <div class="alert alert-danger px-3  p-0 "
+      *ngIf="signUp.get('age')?.errors !=null &&
+      signUp.get('age')?.touched">
+        <p *ngIf="signUp.get('age')?.errors?.['required']">
+          Age required
+        </p>
+        <p *ngIf="signUp.get('age')?.errors?.['min']">
+          Age minLength is 1
+        </p>
+        <p  *ngIf="signUp.get('age')?.errors?.['max']">
+         Age maxLength is 99
+        </p>
+      </div>
+    </div>
+
+  <button [disabled]="signUp.invalid"  class="btn btn-info w-100  my-3" [ngStyle]="signUp.invalid?{'background-color': 'gray'}:{'background-color': '#17a2b8'}"> <span *ngIf="!isWating">Register  </span>  <span *ngIf="isWating">Wating ....</span></button>
+
+
+<div *ngIf="isSuccess" class="alert alert-success text-center">
+  Success
+    </div>
+  <div *ngIf="isUniuqeEmail" class="alert alert-danger px-3  d-block p-0 text-center">
+{{isUniuqeEmailMessage}}
+  </div>
+  </form>
+</section>
+
+
